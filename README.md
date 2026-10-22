@@ -10,6 +10,9 @@ Entry for the [UNA App Development Competition – October 2026](https://unawatc
 
 ---
 
+**Demo video (90 s):** [`Docs/SkiDay_demo.mp4`](Docs/SkiDay_demo.mp4), a whole
+simulated day in the simulator.
+
 **Ready-made build:** [`Release/SkiDay_1.0.0.uapp`](Release/SkiDay_1.0.0.uapp)
 (for sideloading by USB) and [`Release/SkiDay_1.0.0_store.zip`](Release/SkiDay_1.0.0_store.zip)
 (the community-store upload package).
@@ -36,6 +39,8 @@ Entry for the [UNA App Development Competition – October 2026](https://unawatc
   a list of every run. Season totals carry over between days.
 - **Storm watch** buzzes when the air pressure falls fast (3 hPa in 3 h by
   default; 2–4 hPa or off). See [how it avoids false alarms](#storm-watch).
+- **Imperial units** (mph, ft, mi, inHg, 12-hour clock) when the watch is set to
+  imperial; metric otherwise.
 - **FIT file** with the sport set to alpine skiing or snowboarding, a lap per
   run (active) and per lift ride (rest), GPS track, altitude and speed.
 - **Demo day:** a scripted day at a made-up resort, played through the real
@@ -96,6 +101,8 @@ list (L1/L2 scroll; the best run is starred). R1 or R2 goes home.
 Nothing buzzes while you are skiing.
 
 ![Summary: totals, profile, runs](Docs/screenshots/summary.png)
+
+![Imperial units](Docs/screenshots/imperial.png)
 
 ## How it works
 
@@ -207,7 +214,8 @@ cmake -S Tests -B build-tests && cmake --build build-tests && ctest --test-dir b
 
 - `Tools/sim_tour.sh OUTDIR [--video]` plays the whole demo day in the
   simulator, saves a screenshot of every screen (and optionally a video), and
-  copies out the day's FIT file.
+  copies out the day's FIT file. `UNA_SIM_IMPERIAL=1` shows it in imperial.
+- `Tools/make_video.py OUTDIR` cuts that recording into the 90 s demo video.
 - `Tools/replay_day.cpp` replays a simulated day (seed, speed, extra stops,
   GPS loss, storm on/off) through the tracker and prints it next to the truth.
 - `Tools/roundify.py` masks screenshots to the round face.

@@ -93,11 +93,13 @@ void SettingsScreen::refresh()
 
     const uint8_t prev = static_cast<uint8_t>((mSel + ROWS - 1) % ROWS);
     const uint8_t next = static_cast<uint8_t>((mSel + 1) % ROWS);
+    // The rows above and below use a short name, so "Storm  0.09 inHg" fits.
+    auto shortName = [](uint8_t row) { return row == STORM ? "Storm" : caption(row); };
     valueText(prev, v, sizeof(v));
-    std::snprintf(buf, sizeof(buf), "%s  %s", caption(prev), v);
+    std::snprintf(buf, sizeof(buf), "%s  %s", shortName(prev), v);
     lv_label_set_text(mPrev, buf);
     valueText(next, v, sizeof(v));
-    std::snprintf(buf, sizeof(buf), "%s  %s", caption(next), v);
+    std::snprintf(buf, sizeof(buf), "%s  %s", shortName(next), v);
     lv_label_set_text(mNext, buf);
 
     lv_label_set_text(mCaption, caption(mSel));

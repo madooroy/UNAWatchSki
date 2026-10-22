@@ -27,7 +27,7 @@ sleep 3
 W=$(xdotool search --name "Ski Day" | head -1); xdotool windowmove "$W" 0 0; sleep 0.5
 
 if [ "$VIDEO" = "--video" ]; then
-    ffmpeg -loglevel error -y -f x11grab -framerate 25 -video_size 480x480 -i "$DISPLAY+0,0" \
+    ffmpeg -loglevel error -y -f x11grab -draw_mouse 0 -framerate 25 -video_size 480x480 -i "$DISPLAY+0,0" \
         -c:v libx264 -pix_fmt yuv420p -crf 20 "$OUT/demo.mp4" & VPID=$!
 fi
 

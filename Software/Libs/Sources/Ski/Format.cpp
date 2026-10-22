@@ -184,7 +184,7 @@ void verticalSpeed(char* b, size_t n, int16_t cms, bool imperial)
 
 const char* verticalSpeedUnit(bool imperial)
 {
-    return imperial ? "ft/min" : "m/s";
+    return imperial ? "fpm" : "m/s";   // feet per minute: "ft/min" does not fit the lift face
 }
 
 } // namespace Fmt

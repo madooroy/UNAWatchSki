@@ -215,7 +215,7 @@ void SummaryScreen::refreshRuns()
         const Ski::RunInfo& r = log.runs[idx];
         Fmt::vertical(a, sizeof(a), r.verticalM, imp);
         Fmt::speed(b, sizeof(b), r.maxSpeedCms, imp);
-        std::snprintf(line, sizeof(line), "%u   %s %s   %s", r.number, a, Fmt::verticalUnit(imp), b);
+        std::snprintf(line, sizeof(line), "%u   %s   %s", r.number, a, b);   // units are in the header
         lv_label_set_text(mRRow[row], line);
         const bool best = r.maxSpeedCms == bestSpeed && bestSpeed > 0;
         lv_obj_set_style_text_color(mRRow[row], Draw::rgb(best ? Theme::kBest : (row == 2 ? Theme::kText : Theme::kTextDim)),
@@ -237,7 +237,7 @@ void SummaryScreen::refreshRuns()
         std::snprintf(line, sizeof(line), "Biggest run%s%s", kDot, c);
     }
     lv_label_set_text(mRDetail, line);
-    std::snprintf(line, sizeof(line), "RUN%sVERT%sTOP", kDot, kDot);
+    std::snprintf(line, sizeof(line), "RUN%s%s%s%s", kDot, imp ? "FT" : "M", kDot, imp ? "MPH" : "KM/H");
     lv_label_set_text(mRHeader, line);
     (void)d;
 }
