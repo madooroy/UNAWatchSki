@@ -32,10 +32,13 @@ add_executable(ski-tests
     RunTracker_test.cpp
     StormWatch_test.cpp
     SkiDay_test.cpp
+    SkiTypes_test.cpp
 
     "${APP_LIBS}/Sources/Ski/RunTracker.cpp"
     "${APP_LIBS}/Sources/Ski/StormWatch.cpp"
     "${APP_LIBS}/Sources/Ski/SkiDaySim.cpp"
+    "${APP_LIBS}/Sources/Ski/Format.cpp"
+    "${APP_LIBS}/Sources/SkiTypes.cpp"
 )
 
 target_include_directories(ski-tests PRIVATE "${APP_LIBS}/Header")

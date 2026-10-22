@@ -182,6 +182,7 @@ public:
     float    altitude() const       { return mAltSmooth; }
     bool     altitudeValid() const  { return mHaveAlt; }
     float    verticalSpeed() const  { return mVs; }   ///< m/s, + up
+    uint32_t stillSeconds() const   { return mStillS; }
     uint32_t now() const            { return mT; }
 
 private:

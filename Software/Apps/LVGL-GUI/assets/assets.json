@@ -1,0 +1,12 @@
+{
+  "fonts": [
+    { "name": "poppins_semibold_72", "file": "ttf/Poppins-SemiBold.ttf", "size": 72, "range": "0x20,0x2C-0x3A", "bpp": 2 },
+    { "name": "poppins_semibold_48", "file": "ttf/Poppins-SemiBold.ttf", "size": 48, "range": "0x20,0x2B-0x3A", "bpp": 2 },
+    { "name": "poppins_semibold_30", "file": "ttf/Poppins-SemiBold.ttf", "size": 30, "range": "0x20-0x7E", "bpp": 2 },
+    { "name": "poppins_medium_22",   "file": "ttf/Poppins-Medium.ttf",   "size": 22, "range": "0x20-0x7E,0xB7", "bpp": 2 },
+    { "name": "poppins_medium_18",   "file": "ttf/Poppins-Medium.ttf",   "size": 18, "range": "0x20-0x7E,0xB7", "bpp": 2 },
+    { "name": "poppins_semibold_15", "file": "ttf/Poppins-SemiBold.ttf", "size": 15, "range": "0x20-0x7E,0xB7", "bpp": 2 },
+    { "name": "poppins_regular_15",  "file": "ttf/Poppins-Regular.ttf",  "size": 15, "range": "0x20-0x7E,0xB7", "bpp": 2 }
+  ],
+  "images": []
+}
