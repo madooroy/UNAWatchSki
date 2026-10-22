@@ -124,6 +124,11 @@ void StormWatch::takeReading(uint32_t t)
 
     const uint8_t idx = spotFor(mParkLat, mParkLon, t);
     Spot& s = mSpots[idx];
+    // Move the spot's centre to the average of its readings (capped, so it
+    // can still follow a queue that moves through the day).
+    const double w = 1.0 / static_cast<double>(std::min<uint16_t>(++s.visits, 8));
+    s.lat += (mParkLat - s.lat) * w;
+    s.lon += (mParkLon - s.lon) * w;
     if (s.count == kReadingsPerSpot) {
         for (uint8_t i = 1; i < kReadingsPerSpot; ++i) {
             s.r[i - 1] = s.r[i];
@@ -200,7 +205,7 @@ bool StormWatch::slopeAt(const Spot& s, uint32_t now, float& hpaPer3h) const
         tMax = std::max(tMax, s.r[i].t);
         ++n;
     }
-    if (n < 2 || tMax - tMin < mCfg.minSpanS) {
+    if (n < 3 || tMax - tMin < mCfg.minSpanS) {
         return false;
     }
     const double den = n * sumXX - sumX * sumX;
@@ -208,6 +213,24 @@ bool StormWatch::slopeAt(const Spot& s, uint32_t now, float& hpaPer3h) const
         return false;
     }
     const double paPerS = (n * sumXY - sumX * sumY) / den;
+
+    // Readings taken at one height lie close to a smooth line (sensor noise
+    // is a few Pa). If they scatter more than mCfg.maxScatterPa about the
+    // fit, they were taken at different heights (stops spread along a slope,
+    // within the spot radius) and the trend means nothing.
+    const double intercept = (sumY - paPerS * sumX) / n;
+    double ss = 0;
+    for (uint8_t i = 0; i < s.count; ++i) {
+        if (now - s.r[i].t > mCfg.windowS) {
+            continue;
+        }
+        const double x = static_cast<double>(static_cast<int32_t>(s.r[i].t - now));
+        const double e = s.r[i].pa - (intercept + paPerS * x);
+        ss += e * e;
+    }
+    if (std::sqrt(ss / n) > mCfg.maxScatterPa) {
+        return false;
+    }
     // Scaled to sea level: up a mountain the station pressure moves by only
     // p/p0 of the weather's change (about 80 % at 2000 m), and the 3 hPa
     // rule is a sea-level figure.

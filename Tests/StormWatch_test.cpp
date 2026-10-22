@@ -175,3 +175,23 @@ TEST(StormWatch, ShufflingInTheQueueKeepsTheStop)
     }
     EXPECT_EQ(sw.trend().readings, 1);
 }
+
+TEST(StormWatch, StopsOnASlopeAreNotComparedAcrossHeights)
+{
+    // Steady weather. A skier stops at the same junction on a 40 % slope on
+    // every lap, but never at exactly the same point: anywhere within 50 m
+    // along the fall line, so up to 20 m higher or lower. That is 2 hPa of
+    // pressure difference that is not weather.
+    for (uint32_t seed = 1; seed <= 20; ++seed) {
+        Feed f;
+        f.weather = steady;
+        uint32_t x = seed * 2654435761u;
+        for (int lap = 0; lap < 16; ++lap) {
+            x = x * 1664525u + 1013904223u;
+            const double along = static_cast<double>(x >> 8) / static_cast<double>(1u << 24) * 50.0 - 25.0;
+            f.standAt(along, 0, 2000.0f + 0.4f * static_cast<float>(along), 150);
+            f.move(750);
+        }
+        EXPECT_EQ(f.alerts, 0) << "seed " << seed;
+    }
+}

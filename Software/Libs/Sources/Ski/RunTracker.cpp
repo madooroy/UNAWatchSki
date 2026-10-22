@@ -390,8 +390,9 @@ void RunTracker::closeRun()
     r.movingTime = std::max(0.0f, end.cum.movingTime - mSegStartCum.movingTime);
     r.maxSpeed   = end.maxSpeed;   // the run's top speed as of its end
 
-    const bool bestSpeed = r.maxSpeed > mMaxSpeed && r.maxSpeed > 0.0f;
-    const bool bestVert  = r.vertical() > mLongestRun;
+    // A best needs a clear margin: the same run skied twice is not a record.
+    const bool bestSpeed = r.maxSpeed > mMaxSpeed + 0.3f && r.maxSpeed > 0.0f;
+    const bool bestVert  = r.vertical() > mLongestRun * 1.05f + 5.0f;
 
     ++mRuns;
     mVertical += r.vertical();

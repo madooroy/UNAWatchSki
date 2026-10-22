@@ -21,10 +21,14 @@
  *     0.7 m/s, within 25 m) for 90 s: the median pressure over the last
  *     minute, so a gust or a door slam does not count. Standing longer gives
  *     one more reading every 10 minutes.
- *  2. Each reading is filed under a "spot": readings within 60 m of each
- *     other belong to the same spot.
+ *  2. Each reading is filed under a "spot": a reading within 20 m of a
+ *     spot's average position belongs to it (so a spot centres itself on a
+ *     lift queue, wherever in the queue you stood).
  *  3. The trend at a spot is the least-squares slope of its readings over the
- *     last 3 hours, once they span at least an hour, scaled to its sea-level
+ *     last 3 hours, once there are three spanning at least two hours. If they
+ *     scatter about that line by more than ~0.45 hPa (4 m of height), they
+ *     were not all taken at one height -- stops spread along a slope -- and
+ *     the spot is not used. The slope is scaled to its sea-level
  *     equivalent (up a mountain the station pressure moves by only p/p0 of
  *     the weather's change, about 80 % at 2000 m; the 3 hPa rule is a
  *     sea-level figure).
@@ -58,10 +62,12 @@ public:
         float    parkSpeed      = 0.7f;    ///< m/s, standing still
         uint32_t parkMinS       = 90;      ///< s still before a reading
         float    parkRadiusM    = 25.0f;   ///< drift allowed while standing
-        float    spotRadiusM    = 60.0f;   ///< readings this close are the same spot
+        float    spotRadiusM    = 20.0f;   ///< readings this close are the same spot
+        float    maxScatterPa   = 45.0f;   ///< readings scattered more than this about
+                                           ///< their trend were not at one height
         uint32_t readingEveryS  = 600;     ///< extra reading while standing longer
         uint32_t windowS        = 3 * 3600;
-        uint32_t minSpanS       = 3600;    ///< readings at a spot must span this
+        uint32_t minSpanS       = 2 * 3600; ///< readings at a spot must span this
         uint32_t repeatS        = 3600;    ///< repeat the alert at most this often
     };
 
@@ -83,7 +89,8 @@ public:
     static constexpr uint8_t kReadingsPerSpot = 24;
 
     struct Spot {
-        double   lat = 0.0, lon = 0.0;
+        double   lat = 0.0, lon = 0.0;   ///< average position of its readings
+        uint16_t visits = 0;         ///< readings ever filed here (for the average)
         uint8_t  count = 0;          ///< readings held (oldest first)
         Reading  r[kReadingsPerSpot];
         uint32_t lastT = 0;

@@ -162,6 +162,19 @@ TEST(RunTracker, ShortStopsStayInTheRun)
     EXPECT_NEAR(static_cast<double>(d.runs[0].duration()), 250 + 25 + 90, 12);
 }
 
+TEST(RunTracker, FourMinuteWaitMidRunStaysInTheRun)
+{
+    // Waiting for a slower friend half way down is part of the same run.
+    Day d;
+    d.lap(500);
+    d.ski(250);
+    d.stand(240);
+    d.ski(250);
+    d.lap(500);
+    ASSERT_EQ(d.runs.size(), 1u);
+    EXPECT_NEAR(d.runs[0].vertical(), 500.0f, 5.0f);
+}
+
 TEST(RunTracker, LongStopEndsTheRun)
 {
     Day d;
