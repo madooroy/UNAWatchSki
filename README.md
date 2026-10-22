@@ -14,9 +14,11 @@ Entry for the [UNA App Development Competition – October 2026](https://unawatc
 (for sideloading by USB) and [`Release/SkiDay_1.0.0_store.zip`](Release/SkiDay_1.0.0_store.zip)
 (the community-store upload package).
 
-> **Status:** works in the UNA simulator and passes 48 host unit tests, but has
-> **not yet been used on snow or on a watch** (it is October). The demo day
-> below is how it has been tested.
+> **Status:** works in the UNA simulator and passes 49 host unit tests, but has
+> **not yet been used on snow or on a UNA watch** (it is October). It has been
+> tested with the demo day below and with six real resort days recorded on
+> another watch: it found the same runs as that watch on every day, with total
+> vertical within 1 %.
 
 ## What it does
 
@@ -108,7 +110,8 @@ last 20 s. Climbing faster than 0.3 m/s is a lift; dropping faster than
 25 m below the high point, a lift once you have climbed 15 m. Both are then
 dated back: a run starts when you pushed off the top and ends when you reached
 the bottom; a lift starts when you boarded. A run ends at the next lift, when
-you walk 12 m back up, or after 5 minutes without skiing (lunch). Two lift
+you walk 12 m back up, or after 15 minutes without skiing (lunch; a shorter
+break at a hut stays in the run). Two lift
 rides with no run between are merged (a gondola that stopped in the wind, or
 two chained lifts). Top speed is filtered so one bad GPS fix cannot set it.
 

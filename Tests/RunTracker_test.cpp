@@ -175,12 +175,28 @@ TEST(RunTracker, FourMinuteWaitMidRunStaysInTheRun)
     EXPECT_NEAR(d.runs[0].vertical(), 500.0f, 5.0f);
 }
 
+TEST(RunTracker, BreakThenSlowRunOutStaysOneRun)
+{
+    // From a real day at Jay Peak: 70 m down, an 11-minute break, then 34 m
+    // down a gentle run-out at 0.2 m/s to the lift. Garmin counts one run of
+    // 107 m; so must we.
+    Day d;
+    d.lap(300);
+    d.ski(70);
+    d.stand(690);
+    d.walk(-34.0f, 180);
+    d.stand(60);
+    d.lap(300);
+    ASSERT_EQ(d.runs.size(), 1u);
+    EXPECT_NEAR(d.runs[0].vertical(), 104.0f, 4.0f);
+}
+
 TEST(RunTracker, LongStopEndsTheRun)
 {
     Day d;
     d.lap(400);
     d.ski(200);
-    d.stand(400);   // lunch half way down
+    d.stand(1800);  // lunch half way down
     d.ski(200);
     d.stand(60);
     d.trk.finish();

@@ -35,7 +35,7 @@
  * found within minutes of each other, so the barometer's drift with the
  * weather (up to ~15 m an hour in a storm) does not move them.
  *
- * A run ends when the next lift is confirmed, after 5 minutes without moving
+ * A run ends when the next lift is confirmed, after 15 minutes without moving
  * downhill (lunch, a long wait), or when you walk 12 m back up. Shorter stops
  * inside a run (a fall, waiting for a friend) stay in the run. A lift ends
  * after 40 s without climbing; if another lift starts within 5 minutes and no
@@ -135,8 +135,8 @@ public:
         float    nearTol         = 2.0f;   ///< m, "at" the high or low point
         float    hikeCloseGain   = 12.0f;  ///< m walked back up that ends a run
         uint32_t longStopS       = 120;    ///< a stop this long resets a run's start
-        uint32_t runIdleCloseS   = 300;    ///< close a run after this long not skiing
-                                            ///< (a 3-4 min wait for friends stays in the run)
+        uint32_t runIdleCloseS   = 900;    ///< close a run after this long not skiing
+                                            ///< (a break at a hut stays in the run; lunch ends it)
         uint32_t liftEndHoldS    = 40;     ///< close a lift after this long not climbing
         uint32_t liftMergeGapS   = 300;    ///< merge lifts closer than this, no run between
         float    maxValidSpeed   = 45.0f;  ///< m/s; faster samples are GPS glitches
