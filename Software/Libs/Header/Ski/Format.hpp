@@ -44,6 +44,8 @@ void        clock(char* b, size_t n, uint16_t minuteOfDay, bool h12);
 void        pressure(char* b, size_t n, uint16_t hpaDeci, bool imperial);
 const char* pressureUnit(bool imperial);
 /// Trend "-3.4" hPa or "-0.10" inHg (from hPa per 3 h x 100), always signed.
+/// Storm alert threshold, a whole number of hPa: "3 hPa" or "0.09 inHg".
+void        stormThreshold(char* b, size_t n, uint8_t hpa, bool imperial);
 void        pressureRate(char* b, size_t n, int16_t hpaCenti, bool imperial);
 
 /// Vertical speed "+2.1" m/s or "+410" ft/min (from cm/s).

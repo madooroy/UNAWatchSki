@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 #include "SDK/Messages/MessageGuard.hpp"
@@ -1068,6 +1069,13 @@ void Service::readSystemSettings()
             mClock12h = msg->timeFormat;
         }
     }
+#if defined(SIMULATOR)
+    // The simulator's watch is always metric; UNA_SIM_IMPERIAL=1 tries imperial.
+    if (const char* e = std::getenv("UNA_SIM_IMPERIAL"); e && e[0] == '1') {
+        mImperial = true;
+        mClock12h = true;
+    }
+#endif
 }
 
 void Service::loadSettings()

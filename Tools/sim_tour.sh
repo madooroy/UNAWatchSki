@@ -15,6 +15,7 @@ BIN="$ROOT/Software/Apps/LVGL-GUI/simulator/build/bin"
 FS="$ROOT/Software/Output"            # the simulator's watch file system
 LOG="$OUT/sim.log"
 export DISPLAY=${DISPLAY_NUM:-:98} UNA_SIM_MUTE=1
+# UNA_SIM_IMPERIAL=1 Tools/sim_tour.sh ... shows the imperial screens.
 Xvfb "$DISPLAY" -screen 0 640x480x24 >/dev/null 2>&1 & XPID=$!
 sleep 1
 # Start clean: no settings, no interrupted day to recover, no old activities.

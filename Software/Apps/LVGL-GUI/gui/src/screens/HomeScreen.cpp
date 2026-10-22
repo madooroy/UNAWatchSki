@@ -16,6 +16,7 @@
 #include "gui/Theme.hpp"
 
 namespace Draw = SDK::LVGL::Draw;
+namespace Fmt  = Ski::Fmt;
 using SDK::LVGL::Buttons;
 
 HomeScreen::HomeScreen(Model& model, void (*openSettings)(void*), void* ctx)
@@ -90,7 +91,9 @@ void HomeScreen::refresh()
     lv_obj_set_style_bg_color(mStatusDot, Draw::rgb(col), LV_PART_MAIN);
 
     if (s.stormHpa) {
-        std::snprintf(buf, sizeof(buf), "Storm alert %u hPa", s.stormHpa);
+        char thr[16];
+        Fmt::stormThreshold(thr, sizeof(thr), s.stormHpa, imp);
+        std::snprintf(buf, sizeof(buf), "Storm alert %s", thr);
     } else {
         std::snprintf(buf, sizeof(buf), "Storm alert off");
     }

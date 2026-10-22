@@ -139,6 +139,18 @@ const char* pressureUnit(bool imperial)
     return imperial ? "inHg" : "hPa";
 }
 
+void stormThreshold(char* b, size_t n, uint8_t hpa, bool imperial)
+{
+    if (imperial) {
+        // inHg x 100 = hPa * 2.953
+        const uint32_t c = (static_cast<uint32_t>(hpa) * 2953u + 500u) / 1000u;
+        std::snprintf(b, n, "%lu.%02lu inHg", static_cast<unsigned long>(c / 100u),
+                      static_cast<unsigned long>(c % 100u));
+    } else {
+        std::snprintf(b, n, "%u hPa", hpa);
+    }
+}
+
 void pressureRate(char* b, size_t n, int16_t hpaCenti, bool imperial)
 {
     const bool neg = hpaCenti < 0;

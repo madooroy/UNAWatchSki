@@ -11,10 +11,12 @@
 #include "SDK/GUI/Button.hpp"
 #include "SDK/GUI/LVGL/Draw.hpp"
 
+#include "Ski/Format.hpp"
 #include "gui/Assets.hpp"
 #include "gui/Theme.hpp"
 
 namespace Draw = SDK::LVGL::Draw;
+namespace Fmt  = Ski::Fmt;
 using SDK::LVGL::Buttons;
 
 SettingsScreen::SettingsScreen(Model& model, void (*back)(void*), void* ctx)
@@ -63,7 +65,7 @@ void SettingsScreen::valueText(uint8_t row, char* buf, size_t n) const
             break;
         case STORM:
             if (s.stormHpa) {
-                std::snprintf(buf, n, "%u hPa", s.stormHpa);
+                Fmt::stormThreshold(buf, n, s.stormHpa, mModel.imperial());
             } else {
                 std::snprintf(buf, n, "Off");
             }
