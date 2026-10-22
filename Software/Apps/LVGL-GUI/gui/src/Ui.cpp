@@ -167,17 +167,17 @@ void Ui::buildOverlays()
     lv_obj_t* top = lv_layer_top();
 
     // Banner: a rounded card across the middle of the face.
-    mBanner = Draw::container(top, 12, 58, 216, 124);
+    mBanner = Draw::container(top, 12, 50, 216, 132);   // covers the face caption
     lv_obj_set_style_bg_color(mBanner, Draw::rgb(SDK::GUI::Color::BLACK), LV_PART_MAIN);
     lv_obj_set_style_bg_opa(mBanner, LV_OPA_COVER, LV_PART_MAIN);
     lv_obj_set_style_radius(mBanner, 26, LV_PART_MAIN);
     lv_obj_set_style_border_width(mBanner, 3, LV_PART_MAIN);
     lv_obj_set_style_border_color(mBanner, Draw::rgb(Theme::kRun), LV_PART_MAIN);
-    mBTitle = Draw::label(mBanner, &poppins_semibold_15, "", 8, 8, 200, LV_TEXT_ALIGN_CENTER, Theme::kRun);
-    mBBig   = Draw::label(mBanner, &poppins_semibold_48, "", 8, 24, 200, LV_TEXT_ALIGN_CENTER, Theme::kText);
+    mBTitle = Draw::label(mBanner, &poppins_semibold_15, "", 8, 12, 200, LV_TEXT_ALIGN_CENTER, Theme::kRun);
+    mBBig   = Draw::label(mBanner, &poppins_semibold_48, "", 8, 28, 200, LV_TEXT_ALIGN_CENTER, Theme::kText);
     mBUnit  = Draw::label(mBanner, &poppins_medium_18, "", 0, 0, 40, LV_TEXT_ALIGN_LEFT, Theme::kTextDim);
-    mBLine  = Draw::label(mBanner, &poppins_regular_15, "", 8, 78, 200, LV_TEXT_ALIGN_CENTER, Theme::kText);
-    mBNote  = Draw::label(mBanner, &poppins_semibold_15, "", 8, 98, 200, LV_TEXT_ALIGN_CENTER, Theme::kBest);
+    mBLine  = Draw::label(mBanner, &poppins_regular_15, "", 8, 82, 200, LV_TEXT_ALIGN_CENTER, Theme::kText);
+    mBNote  = Draw::label(mBanner, &poppins_semibold_15, "", 8, 102, 200, LV_TEXT_ALIGN_CENTER, Theme::kBest);
     Draw::setHidden(mBanner, true);
 
     // Storm: the whole face, amber.
@@ -216,7 +216,7 @@ void Ui::showBanner(const char* title, uint32_t titleColor, const char* big, con
     lv_point_t sz;
     lv_text_get_size(&sz, big, &poppins_semibold_48, 0, 0, LV_COORD_MAX, LV_TEXT_FLAG_NONE);
     lv_label_set_text(mBUnit, unit);
-    lv_obj_set_pos(mBUnit, 108 + sz.x / 2 + 4, 52);
+    lv_obj_set_pos(mBUnit, 108 + sz.x / 2 + 4, 56);
     lv_label_set_text(mBLine, line);
     lv_obj_set_y(mBLine, (big && *big) ? 78 : 44);
     lv_label_set_text(mBNote, note ? note : "");

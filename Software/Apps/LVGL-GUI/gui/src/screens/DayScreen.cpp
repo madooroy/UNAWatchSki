@@ -249,13 +249,12 @@ void DayScreen::refreshLive()
         lv_label_set_text(mLCaption, line);
         Fmt::vertical(a, sizeof(a), last.verticalM, imp);
         setBig(a, Fmt::verticalUnit(imp), 56);
-        Fmt::distance(b, sizeof(b), last.distanceM, imp);
         Fmt::speed(c, sizeof(c), last.maxSpeedCms, imp);
-        std::snprintf(line, sizeof(line), "%s %s%s%s top", b, Fmt::distanceUnit(imp), kDot, c);
+        std::snprintf(line, sizeof(line), "top %s %s", c, Fmt::speedUnit(imp));
         lv_label_set_text(mLLine1, line);
-        Fmt::speed(c, sizeof(c), last.avgSpeedCms, imp);
-        Fmt::duration(b, sizeof(b), last.durationS);
-        std::snprintf(line, sizeof(line), "%s%savg %s %s", b, kDot, c, Fmt::speedUnit(imp));
+        Fmt::distance(b, sizeof(b), last.distanceM, imp);
+        Fmt::duration(c, sizeof(c), last.durationS);
+        std::snprintf(line, sizeof(line), "%s %s%s%s", b, Fmt::distanceUnit(imp), kDot, c);
         lv_label_set_text(mLLine2, line);
     } else if (m == Motion::Lift) {
         lv_label_set_text(mLCaption, "CLIMBING");
@@ -366,15 +365,13 @@ void DayScreen::refreshStorm()
 
     if (lvl == Ski::StormWatch::Level::Learning) {
         lv_label_set_text(mSRate, "--");
-        lv_label_set_text(mSInfo, s.readings ? "Needs an hour at a repeat spot" : "Reads the pressure when you stop");
+        // Short enough for the round face (the trend needs readings at one spot
+        // spanning two hours; see StormWatch).
+        lv_label_set_text(mSInfo, s.readings ? "Needs 2 h at one spot" : "Reads it when you stop");
     } else {
         Fmt::pressureRate(a, sizeof(a), s.rateCenti, imp);
         lv_label_set_text(mSRate, a);
-        if (s.ageMin != 0xFFFF && s.ageMin >= 2) {
-            std::snprintf(line, sizeof(line), "%u readings%s%u min ago", s.readings, kDot, s.ageMin);
-        } else {
-            std::snprintf(line, sizeof(line), "%u readings%s%u spot%s", s.readings, kDot, s.spots, s.spots == 1 ? "" : "s");
-        }
+        std::snprintf(line, sizeof(line), "%u readings%s%u spot%s", s.readings, kDot, s.spots, s.spots == 1 ? "" : "s");
         lv_label_set_text(mSInfo, line);
     }
     std::snprintf(line, sizeof(line), "%s\n/ 3 h", Fmt::pressureUnit(imp));
