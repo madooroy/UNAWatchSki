@@ -17,8 +17,9 @@ Entry for the [UNA App Development Competition – October 2026](https://unawatc
 > **Status:** works in the UNA simulator and passes 49 host unit tests, but has
 > **not yet been used on snow or on a UNA watch** (it is October). It has been
 > tested with the demo day below and with six real resort days recorded on
-> another watch: it found the same runs as that watch on every day, with total
-> vertical within 1 %.
+> another watch: it counted the same number of runs as that watch on every
+> day, top speed within 1 mph, distance within 3.5 % and vertical within 5 %
+> (a little lower: it counts each run top to bottom, not every bit of descent).
 
 ## What it does
 
