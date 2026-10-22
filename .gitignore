@@ -5,3 +5,4 @@ Software/Apps/SkiDay-CMake/build/
 Software/Apps/LVGL-GUI/simulator/build/
 Output/*
 !Output/.gitignore
+Software/Output/

@@ -27,7 +27,7 @@ include($ENV{UNA_SDK}/cmake/una-simulator.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../Libs/libs.cmake)   # LIBS_SOURCES, LIBS_INCLUDE_DIRS
 include(${CMAKE_CURRENT_SOURCE_DIR}/../lvgl-gui.cmake)          # GUI_APP_SOURCES, GUI_APP_INCLUDE_DIRS
 
-# Run from build/bin so the mock file system lands in the repo's Output/.
+# Run from build/bin so the mock file system lands in Software/Output/.
 set(SIM_BIN_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${SIM_BIN_DIR}")
 foreach(cfg Debug Release RelWithDebInfo MinSizeRel)
